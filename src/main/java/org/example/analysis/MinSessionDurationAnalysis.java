@@ -4,12 +4,10 @@ import org.example.domain.SleepingSession;
 
 import java.util.List;
 
-public class MinSessionDurationAnalysis implements SleepAnalysis<Long> {
+public final class MinSessionDurationAnalysis extends BaseSleepAnalysis<Long> {
 
     @Override
-    public SleepAnalysisResult<Long> analyze(List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
-
+    protected SleepAnalysisResult<Long> compute(List<SleepingSession> sessions) {
         long minMinutes = sessions.stream()
                 .mapToLong(SleepingSession::durationMinutes)
                 .min()

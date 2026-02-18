@@ -4,11 +4,10 @@ import org.example.domain.SleepingSession;
 
 import java.util.List;
 
-public class TotalSessionsAnalysis implements SleepAnalysis<Long> {
+public final class TotalSessionsAnalysis extends BaseSleepAnalysis<Long> {
 
     @Override
-    public SleepAnalysisResult<Long> analyze(List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
+    public SleepAnalysisResult<Long> compute(List<SleepingSession> sessions) {
         return new SleepAnalysisResult<>("Total number of sleeping sessions", (long) sessions.size());
     }
 }

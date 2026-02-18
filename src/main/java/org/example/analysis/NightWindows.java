@@ -17,13 +17,12 @@ public final class NightWindows {
     }
 
     public static Stream<LocalDate> nightDates(List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
         if (sessions.isEmpty()) {
             return Stream.empty();
         }
 
-        SleepingSession first = sessions.get(0);
-        SleepingSession last = sessions.get(sessions.size() - 1);
+        SleepingSession first = sessions.getFirst();
+        SleepingSession last = sessions.getLast();
 
         LocalDate startNightDate = first.start().toLocalTime().isAfter(NOON)
                 ? first.start().toLocalDate().plusDays(1)

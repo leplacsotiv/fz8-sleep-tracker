@@ -22,10 +22,10 @@ class SleepLogParserTest {
         Path file = tempDir.resolve("sleep.csv");
         Files.writeString(file,
                 """
-                01.10.25 22:15;02.10.25 08:00;GOOD
-                02.10.25 23:00;03.10.25 08:00;NORMAL
-                03.10.25 14:30;03.10.25 15:20;NORMAL
-                """
+                        01.10.25 22:15;02.10.25 08:00;GOOD
+                        02.10.25 23:00;03.10.25 08:00;NORMAL
+                        03.10.25 14:30;03.10.25 15:20;NORMAL
+                        """
         );
 
         SleepLogParser parser = new SleepLogParser();

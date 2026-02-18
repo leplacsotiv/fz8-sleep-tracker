@@ -21,7 +21,7 @@ class ChronotypeAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 2, 23, 45), LocalDateTime.of(2025, 10, 3, 9, 30), SleepQuality.NORMAL)
         );
 
-        assertEquals(Chronotype.OWL, analysis.analyze(sessions).value());
+        assertEquals(Chronotype.OWL, analysis.apply(sessions).value());
     }
 
     @Test
@@ -31,7 +31,7 @@ class ChronotypeAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 2, 21, 50), LocalDateTime.of(2025, 10, 3, 6, 40), SleepQuality.NORMAL)
         );
 
-        assertEquals(Chronotype.LARK, analysis.analyze(sessions).value());
+        assertEquals(Chronotype.LARK, analysis.apply(sessions).value());
     }
 
     @Test
@@ -41,7 +41,7 @@ class ChronotypeAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 2, 21, 30), LocalDateTime.of(2025, 10, 3, 6, 30), SleepQuality.NORMAL)
         );
 
-        assertEquals(Chronotype.DOVE, analysis.analyze(sessions).value());
+        assertEquals(Chronotype.DOVE, analysis.apply(sessions).value());
     }
 
     @Test
@@ -51,7 +51,7 @@ class ChronotypeAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 2, 14, 0), LocalDateTime.of(2025, 10, 2, 15, 0), SleepQuality.NORMAL)
         );
 
-        assertEquals(Chronotype.LARK, analysis.analyze(sessions).value());
+        assertEquals(Chronotype.LARK, analysis.apply(sessions).value());
     }
 
     @Test
@@ -61,6 +61,6 @@ class ChronotypeAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 4, 13, 0), LocalDateTime.of(2025, 10, 4, 13, 40), SleepQuality.GOOD)
         );
 
-        assertEquals(Chronotype.DOVE, analysis.analyze(sessions).value());
+        assertEquals(Chronotype.DOVE, analysis.apply(sessions).value());
     }
 }

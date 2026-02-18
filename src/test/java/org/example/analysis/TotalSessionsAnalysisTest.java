@@ -19,7 +19,7 @@ class TotalSessionsAnalysisTest {
         );
 
         TotalSessionsAnalysis analysis = new TotalSessionsAnalysis();
-        SleepAnalysisResult<Long> result = analysis.analyze(sessions);
+        SleepAnalysisResult<Long> result = analysis.apply(sessions);
 
         assertEquals(2L, result.value());
         assertEquals("Total number of sleeping sessions", result.description());
@@ -28,7 +28,7 @@ class TotalSessionsAnalysisTest {
     @Test
     void analyze_emptyList_returnsZero() {
         TotalSessionsAnalysis analysis = new TotalSessionsAnalysis();
-        SleepAnalysisResult<Long> result = analysis.analyze(List.of());
+        SleepAnalysisResult<Long> result = analysis.apply(List.of());
         assertEquals(0L, result.value());
     }
 }

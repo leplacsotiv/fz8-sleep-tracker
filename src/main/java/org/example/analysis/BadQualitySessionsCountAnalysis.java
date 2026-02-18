@@ -5,16 +5,24 @@ import org.example.domain.SleepingSession;
 
 import java.util.List;
 
-public class BadQualitySessionsCountAnalysis implements SleepAnalysis<Long> {
+public final class BadQualitySessionsCountAnalysis extends BaseSleepAnalysis<Long> {
+
+    private final String description;
+
+    public BadQualitySessionsCountAnalysis() {
+        this("Number of BAD quality sessions");
+    }
+
+    public BadQualitySessionsCountAnalysis(String description) {
+        this.description = description;
+    }
 
     @Override
-    public SleepAnalysisResult<Long> analyze(List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
-
+    protected SleepAnalysisResult<Long> compute(List<SleepingSession> sessions) {
         long badCount = sessions.stream()
                 .filter(s -> s.quality() == SleepQuality.BAD)
                 .count();
 
-        return new SleepAnalysisResult<>("Number of BAD quality sessions", badCount);
+        return new SleepAnalysisResult<>(description, badCount);
     }
 }

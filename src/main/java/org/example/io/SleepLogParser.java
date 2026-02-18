@@ -61,8 +61,12 @@ public final class SleepLogParser {
 
     private record IndexedLine(int number, String text) {
         private IndexedLine {
-            if (number < 1) throw new IllegalArgumentException("number must be >= 1");
-            if (text == null) throw new IllegalArgumentException("text is null");
+            if (number < 1) {
+                throw new IllegalArgumentException("number must be >= 1");
+            }
+            if (text == null) {
+                throw new IllegalArgumentException("text is null");
+            }
         }
     }
 }

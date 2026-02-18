@@ -19,7 +19,7 @@ class MinSessionDurationAnalysisTest {
         );
 
         MinSessionDurationAnalysis analysis = new MinSessionDurationAnalysis();
-        SleepAnalysisResult<Long> result = analysis.analyze(sessions);
+        SleepAnalysisResult<Long> result = analysis.apply(sessions);
 
         assertEquals(50L, result.value());
     }
@@ -27,7 +27,7 @@ class MinSessionDurationAnalysisTest {
     @Test
     void analyze_emptyList_returnsZero() {
         MinSessionDurationAnalysis analysis = new MinSessionDurationAnalysis();
-        SleepAnalysisResult<Long> result = analysis.analyze(List.of());
+        SleepAnalysisResult<Long> result = analysis.apply(List.of());
         assertEquals(0L, result.value());
     }
 }

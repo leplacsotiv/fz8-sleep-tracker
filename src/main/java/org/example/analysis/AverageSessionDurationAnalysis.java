@@ -4,11 +4,10 @@ import org.example.domain.SleepingSession;
 
 import java.util.List;
 
-public class AverageSessionDurationAnalysis implements SleepAnalysis<Double> {
+public final class AverageSessionDurationAnalysis extends BaseSleepAnalysis<Double> {
 
     @Override
-    public SleepAnalysisResult<Double> analyze(List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
+    public SleepAnalysisResult<Double> compute(List<SleepingSession> sessions) {
 
         double avgMinutes = sessions.stream()
                 .mapToLong(SleepingSession::durationMinutes)

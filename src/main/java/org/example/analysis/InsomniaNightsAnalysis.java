@@ -1,16 +1,16 @@
 package org.example.analysis;
 
 import org.example.domain.SleepingSession;
+import org.example.domain.TimeInterval;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class InsomniaNightsAnalysis implements SleepAnalysis<Long> {
+public final class InsomniaNightsAnalysis extends BaseSleepAnalysis<Long> {
 
     @Override
-    public SleepAnalysisResult<Long> analyze(List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
+    public SleepAnalysisResult<Long> compute(List<SleepingSession> sessions) {
 
         long insomniaNights = NightWindows.nightDates(sessions)
                 .filter(nightDate -> isInsomniaNight(nightDate, sessions))
@@ -24,7 +24,7 @@ public class InsomniaNightsAnalysis implements SleepAnalysis<Long> {
         LocalDateTime to = NightWindows.nightEnd(nightDate);
 
         boolean sleptThisNight = sessions.stream()
-                .anyMatch(s -> s.intersects(from, to));
+                .anyMatch(s -> s.intersects(new TimeInterval(from, to)));
 
         return !sleptThisNight;
     }

@@ -4,11 +4,10 @@ import org.example.domain.SleepingSession;
 
 import java.util.List;
 
-public class MaxSessionDurationAnalysis implements SleepAnalysis<Long> {
+public final class MaxSessionDurationAnalysis extends BaseSleepAnalysis<Long> {
 
     @Override
-    public SleepAnalysisResult<Long> analyze(List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
+    public SleepAnalysisResult<Long> compute(List<SleepingSession> sessions) {
 
         long maxMinutes = sessions.stream()
                 .mapToLong(SleepingSession::durationMinutes)

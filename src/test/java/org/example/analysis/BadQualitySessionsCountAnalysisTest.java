@@ -20,7 +20,7 @@ class BadQualitySessionsCountAnalysisTest {
         );
 
         BadQualitySessionsCountAnalysis analysis = new BadQualitySessionsCountAnalysis();
-        SleepAnalysisResult<Long> result = analysis.analyze(sessions);
+        SleepAnalysisResult<Long> result = analysis.apply(sessions);
 
         assertEquals(2L, result.value());
     }
@@ -28,7 +28,7 @@ class BadQualitySessionsCountAnalysisTest {
     @Test
     void analyze_emptyList_returnsZero() {
         BadQualitySessionsCountAnalysis analysis = new BadQualitySessionsCountAnalysis();
-        SleepAnalysisResult<Long> result = analysis.analyze(List.of());
+        SleepAnalysisResult<Long> result = analysis.apply(List.of());
         assertEquals(0L, result.value());
     }
 }

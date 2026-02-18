@@ -1,6 +1,7 @@
 package org.example.analysis;
 
 import org.example.domain.SleepingSession;
+import org.example.domain.TimeInterval;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,24 +12,26 @@ import java.util.stream.Stream;
 
 public final class NightSleepExtractor {
 
-    private NightSleepExtractor() {
+    private final List<SleepingSession> sessions;
+
+    public NightSleepExtractor(List<SleepingSession> sessions) {
+        this.sessions = sessions;
     }
 
     public record NightSleep(LocalDate nightDate, LocalDateTime sleepStart, LocalDateTime sleepEnd) {
     }
 
-    public static Stream<NightSleep> extract(List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
+    public Stream<NightSleep> extract() {
         return NightWindows.nightDates(sessions)
-                .flatMap(d -> nightSleepForDate(d, sessions).stream());
+                .flatMap(d -> nightSleepForDate(d).stream());
     }
 
-    private static Optional<NightSleep> nightSleepForDate(LocalDate nightDate, List<SleepingSession> sessions) {
+    private Optional<NightSleep> nightSleepForDate(LocalDate nightDate) {
         LocalDateTime from = NightWindows.nightStart(nightDate);
         LocalDateTime to = NightWindows.nightEnd(nightDate);
 
         List<SleepingSession> nightSessions = sessions.stream()
-                .filter(s -> s.intersects(from, to))
+                .filter(s -> s.intersects(new TimeInterval(from, to)))
                 .toList();
 
         if (nightSessions.isEmpty()) {
@@ -38,12 +41,18 @@ public final class NightSleepExtractor {
         LocalDateTime sleepStart = nightSessions.stream()
                 .map(SleepingSession::start)
                 .min(Comparator.naturalOrder())
-                .orElseThrow();
+                .orElseThrow(() ->
+                        new IllegalStateException("Cannot determine sleepStart for night " + nightDate)
+                );
+
 
         LocalDateTime sleepEnd = nightSessions.stream()
                 .map(SleepingSession::end)
                 .max(Comparator.naturalOrder())
-                .orElseThrow();
+                .orElseThrow(() ->
+                        new IllegalStateException("Cannot determine sleepStart for night " + nightDate)
+                );
+
 
         return Optional.of(new NightSleep(nightDate, sleepStart, sleepEnd));
     }

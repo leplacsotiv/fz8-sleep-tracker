@@ -19,7 +19,7 @@ class MaxSessionDurationAnalysisTest {
         );
 
         MaxSessionDurationAnalysis analysis = new MaxSessionDurationAnalysis();
-        SleepAnalysisResult<Long> result = analysis.analyze(sessions);
+        SleepAnalysisResult<Long> result = analysis.apply(sessions);
 
         assertEquals(480L, result.value());
     }
@@ -27,7 +27,7 @@ class MaxSessionDurationAnalysisTest {
     @Test
     void analyze_emptyList_returnsZero() {
         MaxSessionDurationAnalysis analysis = new MaxSessionDurationAnalysis();
-        SleepAnalysisResult<Long> result = analysis.analyze(List.of());
+        SleepAnalysisResult<Long> result = analysis.apply(List.of());
         assertEquals(0L, result.value());
     }
 }

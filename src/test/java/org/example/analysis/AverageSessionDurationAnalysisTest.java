@@ -19,7 +19,7 @@ class AverageSessionDurationAnalysisTest {
         );
 
         AverageSessionDurationAnalysis analysis = new AverageSessionDurationAnalysis();
-        SleepAnalysisResult<Double> result = analysis.analyze(sessions);
+        SleepAnalysisResult<Double> result = analysis.apply(sessions);
 
         assertEquals(90.0, result.value(), 0.000001);
     }
@@ -27,7 +27,7 @@ class AverageSessionDurationAnalysisTest {
     @Test
     void analyze_emptyList_returnsZero() {
         AverageSessionDurationAnalysis analysis = new AverageSessionDurationAnalysis();
-        SleepAnalysisResult<Double> result = analysis.analyze(List.of());
+        SleepAnalysisResult<Double> result = analysis.apply(List.of());
         assertEquals(0.0, result.value(), 0.000001);
     }
 }

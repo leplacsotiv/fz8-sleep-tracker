@@ -9,7 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ChronotypeAnalysis implements SleepAnalysis<Chronotype> {
+public final class ChronotypeAnalysis extends BaseSleepAnalysis<Chronotype> {
 
     private static final LocalTime OWL_SLEEP_AFTER = LocalTime.of(23, 0);
     private static final LocalTime OWL_WAKE_AFTER = LocalTime.of(9, 0);
@@ -18,10 +18,11 @@ public class ChronotypeAnalysis implements SleepAnalysis<Chronotype> {
     private static final LocalTime LARK_WAKE_BEFORE = LocalTime.of(7, 0);
 
     @Override
-    public SleepAnalysisResult<Chronotype> analyze(java.util.List<SleepingSession> sessions) {
-        SleepAnalysis.requireSessions(sessions);
+    public SleepAnalysisResult<Chronotype> compute(java.util.List<SleepingSession> sessions) {
 
-        Map<Chronotype, Long> counts = NightSleepExtractor.extract(sessions)
+        NightSleepExtractor extractor = new NightSleepExtractor(sessions);
+
+        Map<Chronotype, Long> counts = extractor.extract()
                 .map(this::classifyNight)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
@@ -35,10 +36,14 @@ public class ChronotypeAnalysis implements SleepAnalysis<Chronotype> {
         LocalTime wakeTime = nightSleep.sleepEnd().toLocalTime();
 
         boolean isOwl = sleepTime.isAfter(OWL_SLEEP_AFTER) && wakeTime.isAfter(OWL_WAKE_AFTER);
-        if (isOwl) return Chronotype.OWL;
+        if (isOwl) {
+            return Chronotype.OWL;
+        }
 
         boolean isLark = sleepTime.isBefore(LARK_SLEEP_BEFORE) && wakeTime.isBefore(LARK_WAKE_BEFORE);
-        if (isLark) return Chronotype.LARK;
+        if (isLark) {
+            return Chronotype.LARK;
+        }
 
         return Chronotype.DOVE;
     }
@@ -51,9 +56,15 @@ public class ChronotypeAnalysis implements SleepAnalysis<Chronotype> {
         long max = Math.max(owls, Math.max(larks, doves));
         long winners = Stream.of(owls, larks, doves).filter(c -> c == max).count();
 
-        if (winners > 1) return Chronotype.DOVE;
-        if (max == owls) return Chronotype.OWL;
-        if (max == larks) return Chronotype.LARK;
+        if (winners > 1) {
+            return Chronotype.DOVE;
+        }
+        if (max == owls) {
+            return Chronotype.OWL;
+        }
+        if (max == larks) {
+            return Chronotype.LARK;
+        }
         return Chronotype.DOVE;
     }
 }

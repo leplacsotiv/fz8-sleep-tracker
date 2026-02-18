@@ -20,12 +20,9 @@ public record SleepingSession(LocalDateTime start, LocalDateTime end, SleepQuali
         return Duration.between(start, end).toMinutes();
     }
 
-    public boolean intersects(LocalDateTime from, LocalDateTime to) {
-        Objects.requireNonNull(from, "from is null");
-        Objects.requireNonNull(to, "to is null");
-        if (!to.isAfter(from)) {
-            throw new IllegalArgumentException("to must be after from. from=" + from + ", to=" + to);
-        }
-        return start.isBefore(to) && end.isAfter(from);
+    public boolean intersects(TimeInterval interval) {
+        Objects.requireNonNull(interval, "interval is null");
+        TimeInterval sessionInterval = new TimeInterval(start, end);
+        return sessionInterval.intersects(interval);
     }
 }

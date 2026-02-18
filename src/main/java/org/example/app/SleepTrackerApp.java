@@ -35,7 +35,7 @@ public final class SleepTrackerApp {
         );
 
         analyses.stream()
-                .map(a -> a.analyze(sessions))
+                .map(a -> a.apply(sessions))
                 .forEach(System.out::println);
     }
 }

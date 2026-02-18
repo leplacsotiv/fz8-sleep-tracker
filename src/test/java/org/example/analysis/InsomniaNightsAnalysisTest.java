@@ -19,7 +19,7 @@ class InsomniaNightsAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 1, 23, 0), LocalDateTime.of(2025, 10, 2, 3, 0), SleepQuality.NORMAL)
         );
 
-        assertEquals(0L, analysis.analyze(sessions).value());
+        assertEquals(0L, analysis.apply(sessions).value());
     }
 
     @Test
@@ -28,7 +28,7 @@ class InsomniaNightsAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 3, 7, 0), LocalDateTime.of(2025, 10, 3, 11, 0), SleepQuality.GOOD)
         );
 
-        assertEquals(2L, analysis.analyze(sessions).value());
+        assertEquals(2L, analysis.apply(sessions).value());
     }
 
     @Test
@@ -37,7 +37,7 @@ class InsomniaNightsAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 3, 14, 30), LocalDateTime.of(2025, 10, 3, 15, 20), SleepQuality.NORMAL)
         );
 
-        assertEquals(0L, analysis.analyze(sessions).value());
+        assertEquals(0L, analysis.apply(sessions).value());
     }
 
     @Test
@@ -46,7 +46,7 @@ class InsomniaNightsAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 31, 23, 0), LocalDateTime.of(2025, 11, 1, 5, 0), SleepQuality.GOOD)
         );
 
-        assertEquals(0L, analysis.analyze(sessions).value());
+        assertEquals(0L, analysis.apply(sessions).value());
     }
 
     @Test
@@ -56,6 +56,6 @@ class InsomniaNightsAnalysisTest {
                 new SleepingSession(LocalDateTime.of(2025, 10, 2, 10, 0), LocalDateTime.of(2025, 10, 2, 11, 0), SleepQuality.NORMAL)
         );
 
-        assertEquals(2L, analysis.analyze(sessions).value());
+        assertEquals(2L, analysis.apply(sessions).value());
     }
 }
